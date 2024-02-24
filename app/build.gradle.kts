@@ -98,4 +98,6 @@ dependencies {
     implementation("androidx.room:room-paging:$roomVersion")
 
     implementation("com.google.android.material:material:1.11.0")
+
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.15")
 }

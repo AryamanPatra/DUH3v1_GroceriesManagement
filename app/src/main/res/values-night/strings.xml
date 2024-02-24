@@ -1,6 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">DUH3v1</string>
     <string name="password">Password</string>
     <string name="email">Email</string>
-    <string name="new_user_register">New user? Register</string>
 </resources>
