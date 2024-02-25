@@ -50,7 +50,7 @@ class PantryAdapter(
         // contents of the view with that element
         val element = dataSet[position]
         viewHolder.titleTvPgi.text = element.name
-        val displayQuantity = element.quantity.toString() + element.unit.toString()
+        val displayQuantity = element.qLeft.toString() + element.unit.toString()
         viewHolder.quantityTvPgi.text = displayQuantity
         viewHolder.categoryTvPgi.text = element.category
     }

@@ -18,6 +18,7 @@ import com.example.duh3v1.data.models.Item
 import com.example.duh3v1.data.models.MetricUnit
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import java.lang.Float
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -63,12 +64,9 @@ class PantryFragment : Fragment() {
 
         // Test dataset
         dataSet = arrayOf(
-            Item(1,"Tomatoes",3f,MetricUnit.KG,"Vegetable",null),
-            Item(2,"Apples",2f,MetricUnit.KG,"Fruit",null),
-            Item(3,"Grapes",1f,MetricUnit.KG,"Fruit",null),
-            Item(4,"Sugar Syrup",150f,MetricUnit.ML,"Sweetner",null),
-            Item(5,"Cashew",200f,MetricUnit.G,"Nuts",null),
-            Item(6,"Capsicum",4f,MetricUnit.PC,"Vegetable",null),
+            Item(0,"Apple",1f,0f,0f,MetricUnit.KG,"Fruit",null),
+            Item(0,"Garlic",400f,0f,0f,MetricUnit.G,"Veggie",null),
+
         ).toMutableList()
 
         pantryAdapter = PantryAdapter(requireActivity(),dataSet)
@@ -125,8 +123,19 @@ class PantryFragment : Fragment() {
                     if (i.toString()==itemUnitActv.text.toString())
                         selectedUnit = i
                 }
-                dataSet.add(Item(7,itemName.text.toString(),itemQuantity.text.toString().toFloat(),selectedUnit,itemCategory.text.toString(),null))
+                val newItem = Item(
+                    0,
+                    itemName.text.toString(),
+                    Float.parseFloat(itemQuantity.text.toString()),
+                    0f,
+                    0f,
+                    selectedUnit,
+                    itemCategory.text.toString(),
+                    null
+                )
+                dataSet.add(newItem)
                 displayItemsRvPantry.adapter?.notifyItemInserted(dataSet.size-1)
+
                 dialog.dismiss()
             }
             else{
