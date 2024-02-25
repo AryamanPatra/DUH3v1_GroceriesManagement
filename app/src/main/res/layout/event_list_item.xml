@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/titleTvEli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/amaranth"
+        android:padding="2dp"
+        android:text="Title"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descriptionTvEli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/alegreya_sans"
+        android:padding="2dp"
+        android:text="Description"
+        android:textSize="19sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleTvEli"
+        app:layout_constraintVertical_bias="0.262" />
+
+    <ImageView
+        android:id="@+id/notifImvEli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:padding="2dp"
+        android:src="@drawable/baseline_notifications_active_24"
+        app:layout_constraintBottom_toTopOf="@+id/notifCountTvEli"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="#E20000" />
+
+    <TextView
+        android:id="@+id/notifCountTvEli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:fontFamily="@font/alegreya_sans"
+        android:padding="2dp"
+        android:text="1 hr"
+        android:textSize="19sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/endDateTvEli"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/startDateTvEli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/alegreya_sans"
+        android:padding="2dp"
+        android:text="StartDate"
+        android:textSize="17sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/titleTvEli"
+        app:layout_constraintEnd_toStartOf="@+id/notifImvEli" />
+
+    <TextView
+        android:id="@+id/endDateTvEli"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginEnd="32dp"
+        android:fontFamily="@font/alegreya_sans"
+        android:text="EndDate"
+        android:textSize="17sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/descriptionTvEli"
+        app:layout_constraintEnd_toStartOf="@+id/notifCountTvEli" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/itemTagsRvEli"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_margin="10dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descriptionTvEli" />
+</androidx.constraintlayout.widget.ConstraintLayout>
