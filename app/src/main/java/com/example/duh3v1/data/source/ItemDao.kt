@@ -3,32 +3,34 @@ package com.example.duh3v1.data.source
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Upsert
 import com.example.duh3v1.data.models.Item
 
 @Dao
 interface ItemDao {
-    @Upsert
-    suspend fun upsertItem(item: Item): Int
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upsertItem(item: Item): Long
 
     @Delete
-    suspend fun deleteItem(item: Item)
+    fun deleteItem(item: Item)
 
     @Query("SELECT * FROM Item")
-    suspend fun getItems(): LiveData<List<Item>>
+    fun getItems(): LiveData<List<Item>>
     @Query("SELECT * FROM Item ORDER BY name ASC")
-    suspend fun getItemsByNameAscending(): LiveData<List<Item>>
-    @Query("SELECT * FROM Item ORDER BY sum(`quantity left`,`quantity reserved`,`quantity used`) ASC")
-    suspend fun getItemsByQuantityAscending(): LiveData<List<Item>>
+    fun getItemsByNameAscending(): LiveData<List<Item>>
+    @Query("SELECT * FROM Item ORDER BY (`quantity left` + `quantity reserved` + `quantity used`) ASC")
+    fun getItemsByQuantityAscending(): LiveData<List<Item>>
     @Query("SELECT * FROM Item ORDER BY category ASC")
-    suspend fun getItemsByCategoryAscending(): LiveData<List<Item>>
+    fun getItemsByCategoryAscending(): LiveData<List<Item>>
 
     @Query("SELECT * FROM Item ORDER BY name DESC")
-    suspend fun getItemsByNameDescending(): LiveData<List<Item>>
-    @Query("SELECT * FROM Item ORDER BY sum(`quantity left`,`quantity reserved`,`quantity used`) DESC")
-    suspend fun getItemsByQuantityDescending(): LiveData<List<Item>>
+    fun getItemsByNameDescending(): LiveData<List<Item>>
+    @Query("SELECT * FROM Item ORDER BY (`quantity left` + `quantity reserved` + `quantity used`) DESC")
+    fun getItemsByQuantityDescending(): LiveData<List<Item>>
     @Query("SELECT * FROM Item ORDER BY category DESC")
-    suspend fun getItemsByCategoryDescending(): LiveData<List<Item>>
+    fun getItemsByCategoryDescending(): LiveData<List<Item>>
 
 }

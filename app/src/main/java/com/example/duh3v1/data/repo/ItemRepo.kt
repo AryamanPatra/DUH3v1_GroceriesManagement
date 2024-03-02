@@ -11,7 +11,6 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
 
-@OptIn(DelicateCoroutinesApi::class)
 public class ItemRepo(application: Application) {
     private lateinit var itemDao: ItemDao
     private lateinit var itemList: LiveData<List<Item>>
@@ -20,31 +19,27 @@ public class ItemRepo(application: Application) {
         val appDataBase = AppDatabase.getInstance(application)
         if (appDataBase != null) {
             itemDao = appDataBase.itemDao()
-            itemList = runBlocking {
-                GlobalScope.async {
-                    itemDao.getItems()
-                }.await()
-            }
+            itemList = itemDao.getItems()
         }
     }
 
-    public suspend fun upsertData(item: Item): Int{
+    public fun upsertData(item: Item): Long{
         return itemDao.upsertItem(item)
     }
-    public suspend fun deleteData(item: Item){
+    public fun deleteData(item: Item){
         itemDao.deleteItem(item)
     }
-    public suspend fun getAllData(): LiveData<List<Item>>{
+    public fun getAllData(): LiveData<List<Item>>{
         return itemList
     }
-    public suspend fun getAllDataInOrder(sortOrder: SortOrder): LiveData<List<Item>>{
-        when (sortOrder){
-            SortOrder.NAME_ASC -> return itemDao.getItemsByNameAscending()
-            SortOrder.NAME_DESC -> return itemDao.getItemsByNameDescending()
-            SortOrder.QUANTITY_ASC -> return itemDao.getItemsByQuantityAscending()
-            SortOrder.QUANTITY_DESC -> return itemDao.getItemsByQuantityDescending()
-            SortOrder.CATEGORY_ASC -> return itemDao.getItemsByCategoryAscending()
-            SortOrder.CATEGORY_DESC -> return itemDao.getItemsByCategoryDescending()
+    public fun getAllDataInOrder(sortOrder: SortOrder): LiveData<List<Item>>{
+        return when (sortOrder){
+            SortOrder.NAME_ASC -> itemDao.getItemsByNameAscending()
+            SortOrder.NAME_DESC -> itemDao.getItemsByNameDescending()
+            SortOrder.QUANTITY_ASC -> itemDao.getItemsByQuantityAscending()
+            SortOrder.QUANTITY_DESC -> itemDao.getItemsByQuantityDescending()
+            SortOrder.CATEGORY_ASC -> itemDao.getItemsByCategoryAscending()
+            SortOrder.CATEGORY_DESC -> itemDao.getItemsByCategoryDescending()
         }
     }
 }

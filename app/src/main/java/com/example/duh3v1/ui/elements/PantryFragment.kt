@@ -1,7 +1,9 @@
 package com.example.duh3v1.ui.elements
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +12,18 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.duh3v0.ui.utils.PantryAdapter
 import com.example.duh3v1.R
 import com.example.duh3v1.data.models.Item
 import com.example.duh3v1.data.models.MetricUnit
+import com.example.duh3v1.ui.states.ItemViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import java.lang.Float
 
 // TODO: Rename parameter arguments, choose names that match
@@ -39,6 +45,7 @@ class PantryFragment : Fragment() {
     private lateinit var displayItemsRvPantry: RecyclerView
     private lateinit var addItemFab: FloatingActionButton
     private lateinit var dataSet: MutableList<Item>
+    private lateinit var itemViewModel: ItemViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +63,9 @@ class PantryFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_pantry, container, false)
         displayItemsRvPantry = view.findViewById(R.id.displayItemsRvPantry)
         addItemFab = view.findViewById(R.id.addItemFabPantry)
+        //        Initializing "Item" viewModel for pantry fragment
+        itemViewModel = ViewModelProvider(this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(this.requireActivity().application))[ItemViewModel::class.java]
         return view
     }
 
@@ -74,6 +84,7 @@ class PantryFragment : Fragment() {
             GridLayoutManager.VERTICAL,false)
         displayItemsRvPantry.layoutManager = gridLayoutManager
         displayItemsRvPantry.adapter = pantryAdapter
+        reloadDataset()
 
         addItemFab.setOnClickListener{
             addItemViaDialogBox()
@@ -136,6 +147,11 @@ class PantryFragment : Fragment() {
                 dataSet.add(newItem)
                 displayItemsRvPantry.adapter?.notifyItemInserted(dataSet.size-1)
 
+                runBlocking {
+                    val id = itemViewModel.upsert(newItem)
+                    Log.d("AutoGeneration check-in",id.toString())
+                    Log.d("sizeofEntity", itemViewModel.getAllItems().value?.size.toString())
+                }
                 dialog.dismiss()
             }
             else{
@@ -147,5 +163,16 @@ class PantryFragment : Fragment() {
         }
 
         dialog.show()
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun reloadDataset(){
+        val freshDataset = itemViewModel.getAllItems().value
+        dataSet.clear()
+        if (freshDataset != null) {
+            dataSet.addAll(freshDataset)
+            Log.d("dataset size",freshDataset.size.toString())
+            pantryAdapter.notifyDataSetChanged()
+        }
     }
 }

@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Item(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = 0,
+    val id: Long,
     val name: String = "Title",
 
     @ColumnInfo(name="quantity left")
