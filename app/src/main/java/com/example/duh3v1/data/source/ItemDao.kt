@@ -12,10 +12,10 @@ import com.example.duh3v1.data.models.Item
 @Dao
 interface ItemDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsertItem(item: Item): Long
+    suspend fun upsertItem(item: Item)
 
     @Delete
-    fun deleteItem(item: Item)
+    suspend fun deleteItem(item: Item)
 
     @Query("SELECT * FROM Item")
     fun getItems(): LiveData<List<Item>>

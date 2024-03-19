@@ -23,10 +23,10 @@ public class ItemRepo(application: Application) {
         }
     }
 
-    public fun upsertData(item: Item): Long{
-        return itemDao.upsertItem(item)
+    public suspend fun upsertData(item: Item){
+        itemDao.upsertItem(item)
     }
-    public fun deleteData(item: Item){
+    public suspend fun deleteData(item: Item){
         itemDao.deleteItem(item)
     }
     public fun getAllData(): LiveData<List<Item>>{

@@ -11,21 +11,30 @@ import com.example.duh3v1.data.models.RefImageConverter
 @TypeConverters(RefImageConverter::class)
 @Database(
     entities = [Item::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDatabase: RoomDatabase() {
     abstract fun itemDao(): ItemDao
 
     companion object{
+        @Volatile
         private var instance : AppDatabase? = null
-        @Synchronized
+
         public fun getInstance(context: Context): AppDatabase? {
-            if (instance == null)
-                instance =
-                    Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, "AutoGroceries")
-                        .fallbackToDestructiveMigration().build()
-            return instance
+            if (instance!=null)
+                return instance
+            else{
+                synchronized(this){
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
+                        AppDatabase::class.java,
+                        "AutoGroceries"
+                    ).fallbackToDestructiveMigration()
+                        .build()
+                    return instance
+                }
+            }
         }
     }
 }

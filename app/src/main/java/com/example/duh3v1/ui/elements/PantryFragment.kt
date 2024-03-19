@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -64,8 +65,7 @@ class PantryFragment : Fragment() {
         displayItemsRvPantry = view.findViewById(R.id.displayItemsRvPantry)
         addItemFab = view.findViewById(R.id.addItemFabPantry)
         //        Initializing "Item" viewModel for pantry fragment
-        itemViewModel = ViewModelProvider(this,
-            ViewModelProvider.AndroidViewModelFactory.getInstance(this.requireActivity().application))[ItemViewModel::class.java]
+        itemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
         return view
     }
 
@@ -84,7 +84,10 @@ class PantryFragment : Fragment() {
             GridLayoutManager.VERTICAL,false)
         displayItemsRvPantry.layoutManager = gridLayoutManager
         displayItemsRvPantry.adapter = pantryAdapter
-        reloadDataset()
+//        reloadDataset()
+        itemViewModel.getAllItems().observe(viewLifecycleOwner, Observer {items ->
+            pantryAdapter.setData(items)
+        })
 
         addItemFab.setOnClickListener{
             addItemViaDialogBox()

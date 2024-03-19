@@ -11,6 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
@@ -24,13 +25,13 @@ public class ItemViewModel(application: Application) : AndroidViewModel(applicat
         }
 
     }
-    public suspend fun upsert(item: Item): Long{
-        return withContext(Dispatchers.IO){
-            return@withContext itemRepo.upsertData(item)
+    public fun upsert(item: Item){
+        viewModelScope.launch(Dispatchers.IO) {
+            itemRepo.upsertData(item)
         }
     }
-    public suspend fun delete(item: Item){
-        withContext(Dispatchers.IO){
+    public fun delete(item: Item){
+        viewModelScope.launch(Dispatchers.IO) {
             itemRepo.deleteData(item)
         }
     }
