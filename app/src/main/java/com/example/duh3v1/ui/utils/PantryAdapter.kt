@@ -11,7 +11,7 @@ import com.example.duh3v1.data.models.Item
 
 class PantryAdapter(
     context: Context,
-    private val dataSet: MutableList<Item>,
+    private var dataSet: MutableList<Item>,
 ) :
     RecyclerView.Adapter<PantryAdapter.ViewHolder>() {
 
@@ -50,12 +50,17 @@ class PantryAdapter(
         // contents of the view with that element
         val element = dataSet[position]
         viewHolder.titleTvPgi.text = element.name
-        val displayQuantity = element.quantity.toString() + element.unit.toString()
+        val displayQuantity = element.qLeft.toString() + element.unit.toString()
         viewHolder.quantityTvPgi.text = displayQuantity
         viewHolder.categoryTvPgi.text = element.category
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
+
+    fun setData(dataSet: List<Item>){
+        this.dataSet =  dataSet.toMutableList()
+        notifyDataSetChanged()
+    }
 
 }
