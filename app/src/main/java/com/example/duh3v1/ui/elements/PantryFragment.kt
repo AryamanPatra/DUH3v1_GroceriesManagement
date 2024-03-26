@@ -16,14 +16,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.duh3v0.ui.utils.PantryAdapter
+import com.example.duh3v1.ui.utils.PantryAdapter
 import com.example.duh3v1.R
 import com.example.duh3v1.data.models.Item
 import com.example.duh3v1.data.models.MetricUnit
 import com.example.duh3v1.ui.states.ItemViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.runBlocking
 import java.lang.Float
 
@@ -166,16 +165,5 @@ class PantryFragment : Fragment() {
         }
 
         dialog.show()
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun reloadDataset(){
-        val freshDataset = itemViewModel.getAllItems().value
-        dataSet.clear()
-        if (freshDataset != null) {
-            dataSet.addAll(freshDataset)
-            Log.d("dataset size",freshDataset.size.toString())
-            pantryAdapter.notifyDataSetChanged()
-        }
     }
 }

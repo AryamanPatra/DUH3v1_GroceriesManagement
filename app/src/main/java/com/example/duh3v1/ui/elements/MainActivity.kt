@@ -1,5 +1,6 @@
 package com.example.duh3v1.ui.elements
 
+import android.app.ActionBar
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 //      ActionBar codes // Fragment management
+        val actionBar = supportActionBar
+        if (actionBar!=null){
+            actionBar.displayOptions = androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
+            actionBar.setCustomView(R.layout.action_bar_layout)
+        }
         if (savedInstanceState==null){
             replaceFragment(DashboardFragment())
         }
