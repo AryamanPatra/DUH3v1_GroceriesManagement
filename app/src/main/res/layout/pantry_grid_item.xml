@@ -25,6 +25,14 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
+            <ImageButton
+                android:id="@+id/editImbtnPgi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/baseline_edit_note_24"
+                android:background="@color/white"
+                android:layout_gravity="end"
+                />
             <ImageView
                 android:id="@+id/iconImvPgi"
                 android:layout_width="100dp"

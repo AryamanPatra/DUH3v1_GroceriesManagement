@@ -78,7 +78,11 @@ class PantryFragment : Fragment() {
 
         ).toMutableList()
 
-        pantryAdapter = PantryAdapter(requireActivity(),dataSet)
+        pantryAdapter = PantryAdapter(requireActivity(),dataSet) {
+            // Edit Item Bottom Sheet Fragment loads
+            val editItemBSFragment = EditItemBSFragment(it)
+            editItemBSFragment.show(parentFragmentManager,editItemBSFragment.tag)
+        }
         val gridLayoutManager = GridLayoutManager(requireActivity(),2,
             GridLayoutManager.VERTICAL,false)
         displayItemsRvPantry.layoutManager = gridLayoutManager
@@ -88,9 +92,13 @@ class PantryFragment : Fragment() {
             pantryAdapter.setData(items)
         })
 
+
+        // to add item
         addItemFab.setOnClickListener{
             addItemViaDialogBox()
         }
+
+        //to edit / delete item
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.duh3v1.R
@@ -12,6 +13,7 @@ import com.example.duh3v1.data.models.Item
 class PantryAdapter(
     context: Context,
     private var dataSet: MutableList<Item>,
+    private val listener: (Item) -> Unit,
 ) :
     RecyclerView.Adapter<PantryAdapter.ViewHolder>() {
 
@@ -25,12 +27,14 @@ class PantryAdapter(
         val titleTvPgi: TextView
         val quantityTvPgi: TextView
         val categoryTvPgi: TextView
+        val editImbtnPgi: ImageButton
 
         init {
             // Define click listener for the ViewHolder's View
             titleTvPgi = view.findViewById(R.id.titleTvPgi)
             quantityTvPgi = view.findViewById(R.id.quantityTvPgi)
             categoryTvPgi = view.findViewById(R.id.categoryTvPgi)
+            editImbtnPgi = view.findViewById(R.id.editImbtnPgi)
         }
     }
 
@@ -53,6 +57,7 @@ class PantryAdapter(
         val displayQuantity = element.qLeft.toString() + element.unit.toString()
         viewHolder.quantityTvPgi.text = displayQuantity
         viewHolder.categoryTvPgi.text = element.category
+        viewHolder.editImbtnPgi.setOnClickListener{listener(element)}
     }
 
     // Return the size of your dataset (invoked by the layout manager)
