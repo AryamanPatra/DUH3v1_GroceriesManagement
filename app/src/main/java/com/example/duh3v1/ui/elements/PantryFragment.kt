@@ -64,7 +64,7 @@ class PantryFragment : Fragment() {
         displayItemsRvPantry = view.findViewById(R.id.displayItemsRvPantry)
         addItemFab = view.findViewById(R.id.addItemFabPantry)
         //        Initializing "Item" viewModel for pantry fragment
-        itemViewModel = ViewModelProvider(this).get(ItemViewModel::class.java)
+        itemViewModel = ViewModelProvider(this)[ItemViewModel::class.java]
         return view
     }
 
