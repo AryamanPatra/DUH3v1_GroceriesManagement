@@ -38,6 +38,12 @@ class EditItemBSFragment(
     private var param1: String? = null
     private var param2: String? = null
 
+    // Fields for selected Item values
+    private lateinit var itemName: TextInputEditText
+    private lateinit var itemQuantity: TextInputEditText
+    private lateinit var itemCategory: TextInputEditText
+    private lateinit var itemUnitActv: AutoCompleteTextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -52,10 +58,10 @@ class EditItemBSFragment(
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_edit_item_b_s, container, false)
-        val itemName = view.findViewById<TextInputEditText>(R.id.itemNameTietEibs)
-        val itemQuantity = view.findViewById<TextInputEditText>(R.id.itemQuantityTietEibs)
-        val itemCategory = view.findViewById<TextInputEditText>(R.id.itemCategoryTietEibs)
-        val itemUnitActv = view.findViewById<AutoCompleteTextView>(R.id.itemUnitActvEibs)
+        itemName = view.findViewById<TextInputEditText>(R.id.itemNameTietEibs)
+        itemQuantity = view.findViewById<TextInputEditText>(R.id.itemQuantityTietEibs)
+        itemCategory = view.findViewById<TextInputEditText>(R.id.itemCategoryTietEibs)
+        itemUnitActv = view.findViewById<AutoCompleteTextView>(R.id.itemUnitActvEibs)
         val editableInstance = Editable.Factory.getInstance()
         itemName.text = editableInstance.newEditable(selectedItem.name)
         itemQuantity.text = editableInstance.newEditable((selectedItem.qLeft+selectedItem.qReserved+selectedItem.qUsed).toString())
@@ -95,15 +101,15 @@ class EditItemBSFragment(
         alertDialogBuilder.setMessage("Delete item "+selectedItem.name+"?")
         alertDialogBuilder.setTitle("Delete")
         alertDialogBuilder.setCancelable(false)
-        alertDialogBuilder.setPositiveButton("Confirm"){ dialog,which ->
+        alertDialogBuilder.setPositiveButton("Confirm"){ dialog, _ ->
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
             runBlocking {
                 itemViewModel.delete(selectedItem)
                 Log.d("Deletion",selectedItem.name+" deleted")
                 dialog.dismiss()
             }
-//            requireParentFragment().parentFragmentManager.beginTransaction().remove(this).commit()
         }
-        alertDialogBuilder.setNegativeButton("Cancel"){ dialog,which ->
+        alertDialogBuilder.setNegativeButton("Cancel"){ dialog, _ ->
             dialog.dismiss()
         }
         alertDialogBuilder.create().show()
@@ -113,15 +119,25 @@ class EditItemBSFragment(
         alertDialogBuilder.setMessage("Update item "+selectedItem.name+"?")
         alertDialogBuilder.setTitle("Save Changes")
         alertDialogBuilder.setCancelable(false)
-        alertDialogBuilder.setPositiveButton("Confirm"){ dialog,which ->
+
+        alertDialogBuilder.setPositiveButton("Confirm"){ dialog, _ ->
+            // reassigning values before pushing for upsert
+            selectedItem.name = itemName.text.toString()
+            selectedItem.qLeft = itemQuantity.text.toString().toFloat()
+            for (i in MetricUnit.entries.toTypedArray()){
+                if (i.toString()==itemUnitActv.text.toString())
+                    selectedItem.unit = i
+            }
+            selectedItem.category = itemCategory.text.toString()
+
+            activity?.supportFragmentManager?.beginTransaction()?.remove(this)?.commit()
             runBlocking {
                 itemViewModel.upsert(selectedItem)
                 Log.d("Update",selectedItem.name+" update")
                 dialog.dismiss()
             }
-            requireParentFragment().parentFragmentManager.beginTransaction().remove(this).commit()
         }
-        alertDialogBuilder.setNegativeButton("Cancel"){ dialog,which ->
+        alertDialogBuilder.setNegativeButton("Cancel"){ dialog, _ ->
             dialog.dismiss()
         }
         alertDialogBuilder.create().show()

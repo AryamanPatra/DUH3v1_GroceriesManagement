@@ -9,17 +9,17 @@ import androidx.room.PrimaryKey
 data class Item(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
-    val name: String = "Title",
+    var name: String = "Title",
 
     @ColumnInfo(name="quantity left")
-    val qLeft: Float = 0f,
+    var qLeft: Float = 0f,
     @ColumnInfo(name="quantity reserved")
-    val qReserved: Float = 0f,
+    var qReserved: Float = 0f,
     @ColumnInfo(name="quantity used")
-    val qUsed: Float = 0f,
+    var qUsed: Float = 0f,
 
-    val unit: MetricUnit = MetricUnit.PC,
-    val category: String = "None",
+    var unit: MetricUnit = MetricUnit.PC,
+    var category: String = "None",
     @ColumnInfo(name="reference image")
-    val refImage: Image? = null,
+    var refImage: Image? = null,
 )

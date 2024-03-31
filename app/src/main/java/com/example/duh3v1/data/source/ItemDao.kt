@@ -11,7 +11,7 @@ import com.example.duh3v1.data.models.Item
 
 @Dao
 interface ItemDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Upsert
     suspend fun upsertItem(item: Item)
 
     @Delete

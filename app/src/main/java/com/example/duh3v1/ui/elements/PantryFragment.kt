@@ -86,6 +86,7 @@ class PantryFragment : Fragment() {
         val gridLayoutManager = GridLayoutManager(requireActivity(),2,
             GridLayoutManager.VERTICAL,false)
         displayItemsRvPantry.layoutManager = gridLayoutManager
+        displayItemsRvPantry.itemAnimator = null
         displayItemsRvPantry.adapter = pantryAdapter
 //        reloadDataset()
         itemViewModel.getAllItems().observe(viewLifecycleOwner, Observer {items ->
