@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
                 }
             }
+            binding.drawerLayout.closeDrawers()
             true
         }
 
