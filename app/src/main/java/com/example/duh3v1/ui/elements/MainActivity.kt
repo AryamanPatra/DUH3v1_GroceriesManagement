@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this, "Pantry", Toast.LENGTH_SHORT).show()
                 }
                 R.id.navMenuId4 -> {
+                    replaceFragment(RecipeFragment())
+                    Toast.makeText(this, "Recipes", Toast.LENGTH_SHORT).show()
+                }
+                R.id.navMenuId5 -> {
                     replaceFragment(SettingsFragment())
                     Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show()
                 }

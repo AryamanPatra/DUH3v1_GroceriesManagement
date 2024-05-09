@@ -17,6 +17,11 @@
         />
     <item
         android:id="@+id/navMenuId4"
+        android:title="Recipes"
+        android:icon="@drawable/recipe"
+        />
+    <item
+        android:id="@+id/navMenuId5"
         android:title="Settings"
         android:icon="@drawable/baseline_settings_24"
         />
