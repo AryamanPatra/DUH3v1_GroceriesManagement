@@ -1,15 +1,14 @@
 package com.example.duh3v1.ui.elements
 
-import android.app.ActionBar
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.duh3v1.databinding.ActivityMainBinding
 import com.example.duh3v1.R
+import com.example.duh3v1.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
